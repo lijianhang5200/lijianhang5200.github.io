@@ -4,3 +4,11 @@ _site
 .git/
 .idea/
 *.DS_Store
+
+### IDEA ###
+.idea/*
+*.iml
+*/target/*
+*/*.iml
+/logs/
+/temp/
