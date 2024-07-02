@@ -1,0 +1,65 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title:  学习笔记
+subtitle: 沉淀、分享、成长，让自己和他人都能有所收获
+name: 「航」de 码场
+email: 970082001@qq.com
+description: 沉淀、分享、成长，以最易学习编程的方式分享知识，让自己和他人都能有所收获。
+keywords: java,大数据常用框架,python,数据分析,hadoop,spark,kafka,flume,nginx
+encoding: "utf-8"
+
+repository: fuzhengwei/CodeGuide
+github_url: https://github.com/lijianhang5200
+
+# The base hostname & protocol for your site
+# For local test, please use http://localhost:4000
+# For production, use your github page url. ex. http://dongchuan.github.io
+url: http://blog.lijianhang.top
+
+## Gem
+gems:
+  - jekyll-paginate
+  - jekyll-geo-pattern
+  - rouge
+  - kramdown
+  - jekyll-github-metadata
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+lsi:         false
+excerpt_separator: "\n\n"
+permalink: /pages/posts/:year/:month/:day/:title:output_ext
+
+source:      .
+destination: ./_site
+
+quiet:    false
+defaults: []
+
+kramdown:
+  input: GFM
+  enable_coderay: true
+
+# Pagination
+paginate: 10
+paginate_path: "page:num"
+
+# Navigation. If you do not like these modules, just remove them :D
+navs:
+  -
+    href: /
+    label: 首页
+
+  -
+    href: /blog
+    label: 时间线
+
+# Sidebar to show popular repo
+side_bar_repo_limit: 5 # Number of repos to show

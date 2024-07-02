@@ -1,0 +1,15 @@
+_site
+_posts/_drafts
+.sass-cache
+.jekyll-metadata
+.git/
+.idea/
+*.DS_Store
+
+### IDEA ###
+.idea/*
+*.iml
+*/target/*
+*/*.iml
+/logs/
+/temp/
