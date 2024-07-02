@@ -13,7 +13,7 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
+    "lib",
     "test",
     "tests"
   ],
@@ -25,6 +25,7 @@
     "geopattern": "^1.2.3",
     "underscore": "^1.8.3",
     "primer-markdown": "^2.5.1",
-    "flag-icon-css": "^2.3.1"
+    "flag-icon-css": "^2.3.1",
+    "sql-formatter": "https://github.com/sql-formatter-org/sql-formatter.git#^15.3.2"
   }
 }
