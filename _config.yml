@@ -62,3 +62,7 @@ navs:
     href: /tool
     label: 工具
 
+collections:
+  tool:
+    output: true
+    permalink: /pages/:collection/:name
