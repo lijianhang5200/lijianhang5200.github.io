@@ -1,0 +1,55 @@
+
+title: 学习笔记
+subtitle: 沉淀、分享、成长，让自己和他人都能有所收获
+name: Hang's 码场
+email: 970082001@qq.com
+description: 沉淀、分享、成长，以最易学习编程的方式分享知识，让自己和他人都能有所收获。
+keywords: java,大数据常用框架,python,数据分析,hadoop,spark,kafka,flume,nginx
+encoding: "utf-8"
+url: http://blog.lijianhang.top
+
+## Gem
+gems:
+  - jekyll-paginate
+  - jekyll-geo-pattern
+  - rouge
+  - kramdown
+  - jekyll-github-metadata
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+lsi:         false
+excerpt_separator: "\n\n"
+permalink: /posts/:year/:month/:day/:title:output_ext
+
+source:      .
+destination: ./_site
+
+quiet:    false
+defaults: []
+
+kramdown:
+  input: GFM
+  enable_coderay: true
+
+# Pagination
+paginate: 10
+paginate_path: "page:num"
+
+# Navigation. If you do not like these modules, just remove them :D
+navs:
+  -
+    href: /
+    label: 首页
+  -
+    href: /blog
+    label: 时间线
+  -
+    href: /tool
+    label: 工具
+
+collections:
+  tools:
+    output: true
+    permalink: /:collection/:name

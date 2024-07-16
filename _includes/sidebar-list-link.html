@@ -1,0 +1,22 @@
+<h3 class="sidebar-title">工具</h3>
+<div id="blog-categories">
+  <div class="list-group">
+    {% for post in site.tools %}
+    <a href="{{ site.url }}{{ post.url }}" class="list-group-item">
+      {{ post.title }}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    var name = decodeURIComponent(location.href.substring(location.href.lastIndexOf('/') + 1)).toLowerCase();
+    $(".list-group-item").each(function (i, item) {
+      if ($(item).text().trim().toLowerCase() === name) {
+        $(item).addClass("active");
+      } else {
+        $(item).removeClass("active");
+      }
+    });
+  });
+</script>
