@@ -1,7 +1,9 @@
 ---
 layout: post
+category: 数据运维
 title: "hadoop CDH搭建"
-tag: [hadoop]
+tag: [ hadoop ]
+excerpt: CDH搭建。
 ---
 
 ## 软件版本
