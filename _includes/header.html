@@ -4,6 +4,7 @@
       {{ site.name }}
     </a>
     <nav class="site-header-nav" role="navigation">
+      <div id="tp-weather-widget" class="site-header-nav-item"></div>
       {% for nav in site.navs %}
       <a href="{{ nav.href }}"
          class="{% if page.menu == nav.label %} selected {% endif %} site-header-nav-item hvr-underline-from-center"
@@ -12,7 +13,6 @@
         {{ nav.label }}
       </a>
       {% endfor %}
-      <div id="tp-weather-widget" class="site-header-nav-item hvr-underline-from-center"></div>
     </nav>
   </div>
 </header>
