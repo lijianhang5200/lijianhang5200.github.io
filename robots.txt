@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: http://www.lijianhang.top/sitemap.xml

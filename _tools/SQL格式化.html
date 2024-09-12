@@ -1,0 +1,205 @@
+---
+layout: tool
+title: SQL格式化
+---
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-inline">
+      <div class="form-group">
+        <label for="language">语言</label>
+        <select id="language" class="form-control">
+          <option value="sql">SQL</option>
+          <!-- dialects -->
+          <option value="redshift">AWS Redshift</option>
+          <option value="bigquery">BigQuery</option>
+          <option value="db2">DB2</option>
+          <option value="db2i">DB2 for IBM i</option>
+          <option value="hive">Hive</option>
+          <option value="mariadb">MariaDB</option>
+          <option value="mysql">MySQL</option>
+          <option value="n1ql">N1QL</option>
+          <option value="plsql" selected>PL/SQL</option>
+          <option value="postgresql">PostgreSQL</option>
+          <option value="singlestoredb">SingleStoreDB</option>
+          <option value="snowflake">Snowflake</option>
+          <option value="spark">Spark</option>
+          <option value="sqlite">SQLite</option>
+          <option value="tsql">Transact-SQL</option>
+          <option value="trino">Trino</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="keywordCase">关键字</label>
+        <select id="keywordCase" class="form-control">
+          <option value="preserve">保留</option>
+          <option value="upper" selected>大写</option>
+          <option value="lower">小写</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="dataTypeCase">数据类型</label>
+        <select id="dataTypeCase" class="form-control">
+          <option value="preserve">保留</option>
+          <option value="upper" selected>大写</option>
+          <option value="lower">小写</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="functionCase">函数</label>
+        <select id="functionCase" class="form-control">
+          <option value="preserve">保留</option>
+          <option value="upper" selected>大写</option>
+          <option value="lower">小写</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="identifierCase">字段</label>
+        <select id="identifierCase" class="form-control">
+          <option value="preserve">保留</option>
+          <option value="upper" selected>大写</option>
+          <option value="lower">小写</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="tabWidth">缩进宽度</label>
+        <input type="number" id="tabWidth" name="tabWidth" min="1" max="80" value="2" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="indentStyle">缩进</label>
+        <select id="indentStyle" class="form-control">
+          <option value="standard">标准</option>
+          <option value="tabularLeft">左对齐</option>
+          <option value="tabularRight" selected>右对齐</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="logicalOperatorNewline">AND/OR位置</label>
+        <select id="logicalOperatorNewline" class="form-control">
+          <option value="before" selected>前面</option>
+          <option value="after">后边</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="expressionWidth">表达式宽度</label>
+        <input type="number" id="expressionWidth" name="expressionWidth" min="0" max="200" value="50"
+               class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="lineBetweenQueries">查询之间的行</label>
+        <input type="number" id="lineBetweenQueries" name="lineBetweenQueries" min="0" max="5" value="1"
+               class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="useTabs" class="checkbox-inline">使用制表符</label>
+        <input type="checkbox" id="useTabs" name="useTabs">
+      </div>
+      <div class="form-group">
+        <label for="denseOperators" class="checkbox-inline">运算符密集</label>
+        <input type="checkbox" id="denseOperators" name="denseOperators">
+      </div>
+      <div class="form-group">
+        <label for="newlineBeforeSemicolon" class="checkbox-inline">分号换行</label>
+        <input type="checkbox" id="newlineBeforeSemicolon" name="newlineBeforeSemicolon" checked>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="font-family: 'Roboto Mono', monospace;">
+  <div class="col-md-6">
+    <textarea id="input" class="form-control" rows="28" autofocus="" wrap="off"
+              style="font-family: 'Roboto Mono', monospace"></textarea>
+  </div>
+  <div class="col-md-6">
+    <textarea id="output" class="form-control" rows="28" readonly="" wrap="off"
+              style="font-family: 'Roboto Mono', monospace;background-color: #fff;"></textarea>
+  </div>
+</div>
+
+<script src="/assets/js/sql-formatter/15.3.2/sql-formatter.min.js"></script>
+<script type="text/javascript">
+  const input = document.getElementById('input');
+  const output = document.getElementById('output');
+
+  const language = document.getElementById('language');
+  const tabWidth = document.getElementById('tabWidth');
+  const useTabs = document.getElementById('useTabs');
+  const keywordCase = document.getElementById('keywordCase');
+  const dataTypeCase = document.getElementById('dataTypeCase');
+  const functionCase = document.getElementById('functionCase');
+  const identifierCase = document.getElementById('identifierCase');
+  const indentStyle = document.getElementById('indentStyle');
+  const logicalOperatorNewline = document.getElementById('logicalOperatorNewline');
+  const expressionWidth = document.getElementById('expressionWidth');
+  const lineBetweenQueries = document.getElementById('lineBetweenQueries');
+  const denseOperators = document.getElementById('denseOperators');
+  const newlineBeforeSemicolon = document.getElementById('newlineBeforeSemicolon');
+
+  function showOutput(text) {
+    output.value = text;
+  }
+
+  function format() {
+    try {
+      const content = input.value;
+      const config = {
+        language: language.options[language.selectedIndex].value,
+        tabWidth: tabWidth.value,
+        useTabs: useTabs.checked,
+        keywordCase: keywordCase.options[keywordCase.selectedIndex].value,
+        dataTypeCase: dataTypeCase.options[dataTypeCase.selectedIndex].value,
+        functionCase: functionCase.options[functionCase.selectedIndex].value,
+        identifierCase: identifierCase.options[identifierCase.selectedIndex].value,
+        indentStyle: indentStyle.options[indentStyle.selectedIndex].value,
+        logicalOperatorNewline: logicalOperatorNewline.options[logicalOperatorNewline.selectedIndex].value,
+        expressionWidth: expressionWidth.value,
+        lineBetweenQueries: lineBetweenQueries.value,
+        denseOperators: denseOperators.checked,
+        newlineBeforeSemicolon: newlineBeforeSemicolon.checked,
+      };
+      localStorage.setItem("tool:sqlFormatter:config", JSON.stringify(config));
+      localStorage.setItem("tool:sqlFormatter:content", content);
+      showOutput(sqlFormatter.format(content, config));
+    } catch (e) {
+      showOutput(e)
+    }
+  }
+
+  const attachFormat = () => {
+    input.addEventListener('input', format);
+    [
+      language,
+      tabWidth,
+      useTabs,
+      keywordCase,
+      dataTypeCase,
+      functionCase,
+      identifierCase,
+      indentStyle,
+      logicalOperatorNewline,
+      expressionWidth,
+      lineBetweenQueries,
+      denseOperators,
+      newlineBeforeSemicolon,
+    ].forEach(option => option.addEventListener('change', format));
+  };
+
+  $(document).ready(function () {
+    let config = localStorage.getItem("tool:sqlFormatter:config");
+    let content = localStorage.getItem("tool:sqlFormatter:content");
+    if (config) {
+      config = JSON.parse(config);
+      input.value = content;
+      Object.keys(config).forEach(item => {
+        if (typeof config[item] === 'boolean') {
+          document.getElementById(item).checked = config[item]
+        } else {
+          document.getElementById(item).value = config[item]
+        }
+      })
+      format();
+    }
+    attachFormat();
+  });
+
+</script>

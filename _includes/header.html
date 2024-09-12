@@ -1,0 +1,33 @@
+<header class="site-header">
+  <div class="container">
+    <a id="site-header-brand" href="/" title="{{ site.name }}">
+      {{ site.name }}
+    </a>
+    <nav class="site-header-nav" role="navigation">
+      <div id="tp-weather-widget" class="site-header-nav-item"></div>
+      {% for nav in site.navs %}
+      <a href="{{ nav.href }}"
+         class="{% if page.menu == nav.label %} selected {% endif %} site-header-nav-item hvr-underline-from-center"
+         target="{{ nav.target | default: _self }}"
+         title="{{ nav.label }}">
+        {{ nav.label }}
+      </a>
+      {% endfor %}
+    </nav>
+  </div>
+</header>
+
+<script>
+  (function(a,h,g,f,e,d,c,b){b=function(){d=h.createElement(g);c=h.getElementsByTagName(g)[0];d.src=e;d.charset="utf-8";d.async=1;c.parentNode.insertBefore(d,c)};a["SeniverseWeatherWidgetObject"]=f;a[f]||(a[f]=function(){(a[f].q=a[f].q||[]).push(arguments)});a[f].l=+new Date();if(a.attachEvent){a.attachEvent("onload",b)}else{a.addEventListener("load",b,false)}}(window,document,"script","SeniverseWeatherWidget","//cdn.sencdn.com/widget2/static/js/bundle.js?t="+parseInt((new Date().getTime() / 100000000).toString(),10)));
+  window.SeniverseWeatherWidget('show', {
+    flavor: "slim",
+    location: "WRR2Q2Z7CXWM",
+    geolocation: true,
+    language: "zh-Hans",
+    unit: "c",
+    theme: "auto",
+    token: "149894cf-6dcb-443d-8e81-e019453aeea7",
+    hover: "enabled",
+    container: "tp-weather-widget"
+  })
+</script>
