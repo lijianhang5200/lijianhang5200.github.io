@@ -21,10 +21,12 @@ docker run \
   -p 80:80 \
   --restart=always \
   -v /opt/data/file/nginx/nginx/nginx.conf:/etc/nginx/nginx.conf \
-  -v /opt/data/file/nginx/html:/usr/share/nginx/html \
-  -v /opt/data/file/nginx/logs:/var/log/nginx \
   -v /opt/data/file/nginx/nginx/conf.d:/etc/nginx/conf.d \
+  -v /opt/data/file/nginx/logs:/var/log/nginx \
+  -v /opt/data/file/nginx/html:/usr/share/nginx/html \
+  -v /opt/data/file/nginx/admin-top:/usr/share/nginx/admin-top \
   -d nginx:1.25.3
+
 ```
 
 ## mysql
@@ -206,7 +208,6 @@ docker run \
 ```shell
 docker run \
   --name postgres \
-  -p 5432:5432 \
   -e POSTGRES_PASSWORD=123456 \
   --restart=always \
   -v /opt/data/postgres/data:/var/lib/postgresql/data \
@@ -224,8 +225,9 @@ docker run \
   --name xxl-job-admin \
   -p 18080:8080 \
   --restart=always \
+  --link mysql \
   -e PARAMS="\
-  --spring.datasource.url=jdbc:mysql://10.88.28.1:3306/xxl_job?Unicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false \
+  --spring.datasource.url=jdbc:mysql://mysql:3306/xxl_job?Unicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false \
   --spring.datasource.username=root \
   --spring.datasource.password=root \
   --xxl.job.accessToken=123456" \
@@ -259,7 +261,7 @@ docker run \
 
 ```
 
-## NestingDNS(不可用)
+## NestingDNS(docker源找不到该项目)
 
 DNS 三大神器 AdGuardHome、MosDNS、SmartDNS
 
