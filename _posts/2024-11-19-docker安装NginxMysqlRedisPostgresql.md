@@ -287,3 +287,32 @@ docker run \
     -d 217heidai/nestingdns
 
 ```
+
+### 青龙面板
+
+```shell
+docker run -dit \
+  -v /opt/data/file/qinglong/data:/ql/data \
+  -p 5700:5700 \
+  --name qinglong \
+  --hostname qinglong \
+  --restart unless-stopped \
+  whyour/qinglong:latest
+```
+
+### syncthing
+
+```shell
+docker run -d \
+  --name syncthing \
+  --restart always \
+  -p 8384:8384 \
+  -p 22000:22000/tcp \
+  -p 22000:22000/udp \
+  -p 21027:21027/udp \
+  -e TZ=Asia/Shanghai \
+  -v /opt/data/file/syncthing/config:/var/syncthing/config \
+  -v /opt/data/file/syncthing/files:/var/syncthing/files \
+  -v /opt/data/file/Camera:/var/syncthing/Camera \
+  syncthing/syncthing
+```
