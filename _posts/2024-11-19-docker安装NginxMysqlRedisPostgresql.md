@@ -26,7 +26,6 @@ docker run \
   -v /opt/data/file/nginx/html:/usr/share/nginx/html \
   -v /opt/data/file/nginx/admin-top:/usr/share/nginx/admin-top \
   -d nginx:1.25.3
-
 ```
 
 ## mysql
@@ -198,7 +197,6 @@ docker run \
   -v /opt/data/file/redis/data:/data \
   -d redis:5.0 \
   redis-server /etc/redis/redis.conf --appendonly yes
-
 ```
 
 ## postgresql
@@ -212,7 +210,6 @@ docker run \
   --restart=always \
   -v /opt/data/postgres/data:/var/lib/postgresql/data \
   -d postgres:15.8
-
 ```
 
 ## xxl-job-admin
@@ -234,7 +231,6 @@ docker run \
   -v /opt/data/file/xxl-job/admin/logs:/data/applogs \
   --privileged=true \
   -d xuxueli/xxl-job-admin:2.4.1
-
 ```
 
 **页面访问**
@@ -258,7 +254,6 @@ docker run \
   -v /opt/data/file/adguardhome/conf:/opt/adguardhome/conf \
   -v /opt/data/file/adguardhome/work:/opt/adguardhome/work \
   -d adguard/adguardhome
-
 ```
 
 ## NestingDNS(docker源找不到该项目)
@@ -266,7 +261,6 @@ docker run \
 DNS 三大神器 AdGuardHome、MosDNS、SmartDNS
 
 (参考网址)[https://github.com/217heidai/NestingDNS]
-
 
 ```shell
 mkdir -p /opt/data/file/nestingdns/etc
@@ -288,19 +282,19 @@ docker run \
 
 ```
 
-### 青龙面板
+## 青龙面板
 
 ```shell
 docker run -dit \
-  -v /opt/data/file/qinglong/data:/ql/data \
-  -p 5700:5700 \
   --name qinglong \
   --hostname qinglong \
   --restart unless-stopped \
-  whyour/qinglong:latest
+  -p 5700:5700 \
+  -v /opt/data/file/qinglong/data:/ql/data \
+  whyour/qinglong
 ```
 
-### syncthing
+## syncthing
 
 ```shell
 docker run -d \
@@ -313,6 +307,89 @@ docker run -d \
   -e TZ=Asia/Shanghai \
   -v /opt/data/file/syncthing/config:/var/syncthing/config \
   -v /opt/data/file/syncthing/files:/var/syncthing/files \
-  -v /opt/data/file/Camera:/var/syncthing/Camera \
+  -v /opt/data/file/Pictures/Camera:/var/syncthing/Camera \
+  -v /opt/data/file/Pictures/Screenshots:/var/syncthing/Screenshots \
+  -v /opt/data/file/Pictures/Weixin:/var/syncthing/Weixin \
+  -v /opt/data/file/Pictures/Collage:/var/syncthing/Collage \
+  -v /opt/data/file/Pictures/Douyin:/var/syncthing/Douyin \
   syncthing/syncthing
+```
+
+## HomeAssistant
+
+```shell
+docker run -d \
+  --name=homeassistant \
+  --restart=unless-stopped \
+  -p 8123:8123 \
+  -v /opt/data/file/homeassistant:/config \
+  -e TZ=Asia/Shanghai \
+  ghcr.io/home-assistant/home-assistant:stable
+```
+
+## 迅雷
+
+```shell
+docker run -d \
+  --name=xunlei \
+  --restart=always \
+  --privileged \
+  -p 2345:2345 \
+  -v /opt/data/file/xunlei:/xunlei/data \
+  -v /opt/data/file/Downloads:/xunlei/downloads \
+  cnk3x/xunlei
+```
+
+内测码`迅雷牛通`
+
+使用 privileged 标志时，容器内的进程将具有以下能力：
+1. 拥有访问主机上所有设备的权限。
+2. 可以使用主机的所有内核功能。
+3. 可以使用主机上所有的文件系统。
+
+## it-tools
+
+```shell
+docker run -d \
+  --name it-tools \
+  --restart unless-stopped \
+  -p 8080:80 \
+  ghcr.io/corentinth/it-tools
+```
+
+## photoview
+
+```shell
+docker run -d \
+  --restart unless-stopped \
+  --name photoview \
+  -p 8810:80 \
+  -v /opt/data/file/photoview/cache:/app/cache \
+  -v /opt/data/file/Pictures:/Pictures \
+  -e PHOTOVIEW_DATABASE_DRIVER=mysql \
+  -e PHOTOVIEW_MYSQL_URL=photoview:K2DjA2iWqtqg@tcp\(mysql:3306\)/photoview \
+  -e PHOTOVIEW_MEDIA_CACHE=/app/cache \
+  --link mysql \
+  photoview/photoview
+```
+
+## moneynote
+
+(参考网址)[https://github.com/getmoneynote/docker-compose-moneynote-ali]
+
+```
+docker run -d \
+  --name moneynote \
+  --restart unless-stopped \
+  -p 43742:9092 \
+  -p 43743:81 \
+  -p 43744:82 \
+  -e DB_HOST=mysql \
+  -e DB_PORT=3306 \
+  -e DB_NAME=moneynote \
+  -e DB_USER=moneynote \
+  -e DB_PASSWORD=K2DjA2iWqtqg \
+  -e invite_code=moneynote \
+  --link mysql \
+  registry.cn-hangzhou.aliyuncs.com/moneynote/moneynote-all-no-mysql:latest
 ```
