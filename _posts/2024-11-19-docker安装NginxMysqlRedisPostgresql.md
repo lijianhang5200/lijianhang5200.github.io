@@ -8,7 +8,7 @@ excerpt: docker安装nginx/mysql/redis/postgresql。
 
 ## nginx
 
-(参考网址)[https://blog.csdn.net/breakaway_01/article/details/141299349]
+[参考网址](https://blog.csdn.net/breakaway_01/article/details/141299349)
 
 ```shell
 docker run --name nginx -p 80:80 -d nginx:1.25.3
@@ -30,7 +30,7 @@ docker run \
 
 ## mysql
 
-(参考网址)[https://blog.csdn.net/breakaway_01/article/details/141299349]
+[参考网址](https://blog.csdn.net/breakaway_01/article/details/141299349)
 
 ```shell
 docker run -d \
@@ -47,7 +47,7 @@ docker run -d \
 
 ## redis
 
-(参考网址)[https://blog.csdn.net/qq_40104261/article/details/120738742]
+[参考网址](https://blog.csdn.net/qq_40104261/article/details/120738742)
 
 ```shell
 mkdir -p /opt/data/file/redis/conf
@@ -201,7 +201,7 @@ docker run \
 
 ## postgresql
 
-(参考网址)[https://zhuanlan.zhihu.com/p/606079311]
+[参考网址](https://zhuanlan.zhihu.com/p/606079311)
 
 ```shell
 docker run \
@@ -214,7 +214,7 @@ docker run \
 
 ## xxl-job-admin
 
-(参考网址)[https://blog.csdn.net/zhaoxichen_10/article/details/118446721]
+[参考网址](https://blog.csdn.net/zhaoxichen_10/article/details/118446721)
 
 ```shell
 mkdir -p /opt/data/file/xxl-job/admin/logs
@@ -240,7 +240,7 @@ docker run \
 
 ## adguardhome
 
-(参考网址)[https://developer.baidu.com/article/details/3252534]
+[参考网址](https://developer.baidu.com/article/details/3252534)
 
 ```shell
 mkdir -p /opt/data/file/adguardhome/work
@@ -260,7 +260,7 @@ docker run \
 
 DNS 三大神器 AdGuardHome、MosDNS、SmartDNS
 
-(参考网址)[https://github.com/217heidai/NestingDNS]
+[参考网址](https://github.com/217heidai/NestingDNS)
 
 ```shell
 mkdir -p /opt/data/file/nestingdns/etc
@@ -375,7 +375,7 @@ docker run -d \
 
 ## moneynote
 
-(参考网址)[https://github.com/getmoneynote/docker-compose-moneynote-ali]
+[参考网址](https://github.com/getmoneynote/docker-compose-moneynote-ali)
 
 ```
 docker run -d \
