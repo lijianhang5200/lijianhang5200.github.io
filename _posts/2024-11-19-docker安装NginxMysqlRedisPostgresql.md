@@ -256,39 +256,13 @@ docker run \
   -d adguard/adguardhome
 ```
 
-## NestingDNS(docker源找不到该项目)
-
-DNS 三大神器 AdGuardHome、MosDNS、SmartDNS
-
-[参考网址](https://github.com/217heidai/NestingDNS)
-
-```shell
-mkdir -p /opt/data/file/nestingdns/etc
-mkdir -p /opt/data/file/nestingdns/work
-mkdir -p /opt/data/file/nestingdns/log
-
-docker run \
-    --restart unless-stopped \
-    --name nestingdns \
-    -p 3000:3000 \
-    -p 4053:4053 \
-    -p 4053:4053/udp \
-    -v /opt/data/file/nestingdns/etc:/nestingdns/etc \
-    -v /opt/data/file/nestingdns/work:/nestingdns/work \
-    -v /opt/data/file/nestingdns/log:/nestingdns/log \
-    -e TZ=Asia/Shanghai \
-    -e SCHEDULE="0  4  *  *  *" \
-    -d 217heidai/nestingdns
-
-```
-
 ## 青龙面板
 
 ```shell
 docker run -dit \
   --name qinglong \
   --hostname qinglong \
-  --restart unless-stopped \
+  --restart=unless-stopped \
   -p 5700:5700 \
   -v /opt/data/file/qinglong/data:/ql/data \
   whyour/qinglong
@@ -299,7 +273,7 @@ docker run -dit \
 ```shell
 docker run -d \
   --name syncthing \
-  --restart always \
+  --restart=always \
   -p 8384:8384 \
   -p 22000:22000/tcp \
   -p 22000:22000/udp \
@@ -352,7 +326,7 @@ docker run -d \
 ```shell
 docker run -d \
   --name it-tools \
-  --restart unless-stopped \
+  --restart=always \
   -p 8080:80 \
   ghcr.io/corentinth/it-tools
 ```
@@ -361,7 +335,7 @@ docker run -d \
 
 ```shell
 docker run -d \
-  --restart unless-stopped \
+  --restart=always \
   --name photoview \
   -p 8810:80 \
   -v /opt/data/file/photoview/cache:/app/cache \
@@ -380,7 +354,7 @@ docker run -d \
 ```
 docker run -d \
   --name moneynote \
-  --restart unless-stopped \
+  --restart=always \
   -p 43742:9092 \
   -p 43743:81 \
   -p 43744:82 \
@@ -391,5 +365,16 @@ docker run -d \
   -e DB_PASSWORD=K2DjA2iWqtqg \
   -e invite_code=moneynote \
   --link mysql \
-  registry.cn-hangzhou.aliyuncs.com/moneynote/moneynote-all-no-mysql:latest
+  moneynote/moneynote-all-no-mysql
 ```
+
+## aipan
+
+```shell
+docker run -d \
+  --name aipan \
+  --restart=always \
+  -p 3123:3000 \
+  fooololo/aipan-netdisk-search
+```
+
