@@ -301,6 +301,10 @@ docker run -d \
   ghcr.io/home-assistant/home-assistant:stable
 ```
 
+安装`HACS`插件
+
+[https://github.com/hacs/integration/releases/](https://github.com/hacs/integration/releases/)
+
 ## 迅雷
 
 ```shell
@@ -377,4 +381,45 @@ docker run -d \
   -p 3123:3000 \
   fooololo/aipan-netdisk-search
 ```
+
+## iptv-sources
+
+[项目地址](https://github.com/HerbertHe/iptv-sources)
+
+[参考网址](https://www.bilibili.com/video/BV1WZ421b76D/?vd_source=d38431766e665fda7c2ed5fb203e0a79)
+
+```shell
+docker run -d \
+  --name iptv-sources \
+  --restart always \
+  -p 3088:8080 \
+  herberthe0229/iptv-sources
+```
+
+```shell
+docker exec -d iptv-sources /bin/sh ./update-sources.sh
+crontab -e
+二选一，或自己设定时间
+
+①每两小时刷新一次：
+0 */2 * * * /bin/sh ~/iptv-update.sh
+
+②每天5点刷新一次：
+0 5 * * * /bin/sh ~/iptv-update.sh
+```
+
+## watchtower
+
+使用以下命令，更新宿主机的所有容器，也包括 Watch­tower 本身。
+
+```shell
+docker run -d  \
+  --name watchtower \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  containrrr/watchtower
+```
+
+1. Watchtower 默认情况下 24 小时会检查一次镜像更新。设置--interval 选项更新时间，默认单位秒。
+2. 可以使用--schedule选项， 设定定时更新任务，定时任务为6 字段来表示执行时间，第一个字段表示秒。
+3. 可以使用--cleanup 选项，这样每次更新都会把旧的镜像清理掉。
 
