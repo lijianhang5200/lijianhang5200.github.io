@@ -212,6 +212,42 @@ docker run \
   -d postgres:15.8
 ```
 
+## oracle11g 测试使用
+
+```shell
+# 创建容器
+docker run -itd \
+  --name oracle11204 \
+  -h oracle11204 \
+  --privileged=true  \
+  -p 1521:1521  \
+  -p 222:22   \
+  -p 1158:1158 \
+  xingyuyu123/oracle:oracle11204 init
+
+# 进入容器
+docker exec -it oracle11204 bash
+
+# 启动数据库和监听
+[root@oracle11204 /]# su - oracle
+[oracle@oracle11204 ~]$ lsnrctl start
+[oracle@oracle11204 ~]$ sqlplus / as sysdba
+SYS@JEM11GR2> startup
+SYS@JEM11GR2> select * from v$version;
+
+# 外部连接容器内的数据库
+sqlplus sys/jem@192.168.1.54:1521/JEM11GR2 AS SYSDBA
+注意：此处访问宿主机端口为1521，容器内部是1521，端口映射,系统管理员密码为jem
+
+# 修改sys密码
+ALTER USER sys IDENTIFIED BY system;
+#验证密码是否修改成功
+commit;
+exit
+sqlplus sys/new_password as sysdba
+
+```
+
 ## xxl-job-admin
 
 [参考网址](https://blog.csdn.net/zhaoxichen_10/article/details/118446721)
