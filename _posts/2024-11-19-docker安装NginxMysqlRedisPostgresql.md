@@ -35,14 +35,13 @@ docker run \
 ```shell
 docker run -d \
   --name mysql \
-  -p 3306:3306 \
   --restart=always \
   -e TZ=Asia/Shanghai \
   -e MYSQL_ROOT_PASSWORD=root \
   -v /opt/data/mysql/data:/var/lib/mysql \
   -v /opt/data/mysql/conf:/etc/mysql/conf.d \
   -v /opt/data/mysql/init:/docker-entrypoint-initdb.d \
-  mysql:8.0
+  mysql:8.4.3
 ```
 
 ## redis
@@ -442,6 +441,19 @@ crontab -e
 
 ②每天5点刷新一次：
 0 5 * * * /bin/sh ~/iptv-update.sh
+```
+
+## allinone
+
+```shell
+docker run -d \
+  --name allinone \
+  --restart unless-stopped \
+  --net=host \
+  --privileged=true \
+  -p 35455:35455 \
+  youshandefeiyang/allinone
+
 ```
 
 ## watchtower
