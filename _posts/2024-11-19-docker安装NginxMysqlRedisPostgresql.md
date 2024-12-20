@@ -2,7 +2,7 @@
 layout: post
 category: 运维
 title: "docker安装nginx/mysql/redis/postgresql"
-tag: [ docker ]
+tag: [ docker, nas ]
 excerpt: docker安装nginx/mysql/redis/postgresql。
 ---
 
@@ -244,7 +244,29 @@ ALTER USER sys IDENTIFIED BY system;
 commit;
 exit
 sqlplus sys/new_password as sysdba
+```
 
+## gitea
+
+```shell
+docker run -d \
+  --name gitea \
+  --privileged=true  \
+  --restart=always \
+  -p 4000:3000 \
+  -p 4022:22 \
+  -e USER_UID=1000 \
+  -e USER_GID=1000 \
+  -e GITEA__database__DB_TYPE=mysql \
+  -e GITEA__database__HOST=mysql:3306 \
+  -e GITEA__database__NAME=gitea \
+  -e GITEA__database__USER=gitea \
+  -e GITEA__database__PASSWD=gitea \
+  -v /opt/data/file/gitea:/data \
+  -v /etc/timezone:/etc/timezone:ro \
+  -v /etc/localtime:/etc/localtime:ro \
+  --link mysql \
+  gitea/gitea
 ```
 
 ## xxl-job-admin
@@ -380,7 +402,7 @@ docker run -d \
   -v /opt/data/file/photoview/cache:/app/cache \
   -v /opt/data/file/Pictures:/Pictures \
   -e PHOTOVIEW_DATABASE_DRIVER=mysql \
-  -e PHOTOVIEW_MYSQL_URL=photoview:K2DjA2iWqtqg@tcp\(mysql:3306\)/photoview \
+  -e PHOTOVIEW_MYSQL_URL=photoview:photoview@tcp\(mysql:3306\)/photoview \
   -e PHOTOVIEW_MEDIA_CACHE=/app/cache \
   --link mysql \
   photoview/photoview
@@ -401,7 +423,7 @@ docker run -d \
   -e DB_PORT=3306 \
   -e DB_NAME=moneynote \
   -e DB_USER=moneynote \
-  -e DB_PASSWORD=K2DjA2iWqtqg \
+  -e DB_PASSWORD=moneynote \
   -e invite_code=moneynote \
   --link mysql \
   moneynote/moneynote-all-no-mysql
@@ -463,6 +485,7 @@ docker run -d \
 ```shell
 docker run -d  \
   --name watchtower \
+  --restart always \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   containrrr/watchtower
 ```
@@ -470,4 +493,3 @@ docker run -d  \
 1. Watchtower 默认情况下 24 小时会检查一次镜像更新。设置--interval 选项更新时间，默认单位秒。
 2. 可以使用--schedule选项， 设定定时更新任务，定时任务为6 字段来表示执行时间，第一个字段表示秒。
 3. 可以使用--cleanup 选项，这样每次更新都会把旧的镜像清理掉。
-
