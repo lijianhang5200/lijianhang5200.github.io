@@ -2,7 +2,7 @@
 layout: post
 category: 数据开发
 title: "trafodion插入语句的性能比较"
-tag: [ 数据库 ]
+tag: [ sql ]
 excerpt: 记录trafodion各插入语句的性能信息。
 ---
 

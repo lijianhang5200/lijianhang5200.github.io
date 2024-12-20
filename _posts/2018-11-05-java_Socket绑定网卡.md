@@ -2,7 +2,7 @@
 layout: post
 category: 后端
 title: "java Socket绑定网卡"
-tag: [java, 网络编程]
+tag: [ java ]
 excerpt: 在做java开发时有时会出现绑定的网卡不是自己需要的所以找到了以下的方法。
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 category: 后端
 title: "netty使用"
-tag: [java, 网络编程]
+tag: [ java ]
 excerpt: 由 JBOSS 提供的一个基于 JAVA NIO 类库的开源异步通信框架。
 ---
 
