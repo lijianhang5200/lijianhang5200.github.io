@@ -367,7 +367,7 @@ docker run -d \
 ```shell
 docker run -d \
   --name=xunlei \
-  --restart=always \
+  --restart=unless-stopped \
   --privileged \
   -p 2345:2345 \
   -v /opt/data/file/xunlei:/xunlei/data \
@@ -382,6 +382,21 @@ docker run -d \
 2. 可以使用主机的所有内核功能。
 3. 可以使用主机上所有的文件系统。
 
+## 百度云(已不能使用)
+
+[参考网址](https://blog.csdn.net/weixin_48714407/article/details/134598980)
+
+[下载地址](https://pan.baidu.com/s/1VIRX7vLwMxYTch9cpN68-w?pwd=gwe1)
+
+```shell
+docker run -itd \
+  --name baiduyunpan \
+  --restart=unless-stopped \
+  -p 5299:5299 \
+  -v /opt/data/file/Downloads:/root/Downloads \
+  baiyuetribe/baiduyunpan
+```
+
 ## it-tools
 
 ```shell
@@ -392,7 +407,7 @@ docker run -d \
   ghcr.io/corentinth/it-tools
 ```
 
-## photoview
+## photoview(已启用，不能使用地点，替换为nascab)
 
 ```shell
 docker run -d \
@@ -406,6 +421,32 @@ docker run -d \
   -e PHOTOVIEW_MEDIA_CACHE=/app/cache \
   --link mysql \
   photoview/photoview
+```
+
+## nascab
+
+[参考地址](https://www.nascab.cn/)
+
+[下载地址](https://pan.baidu.com/e/1FiBdoAliwnOxzf7YuVDJIw?pwd=rjt2)
+
+```shell
+docker load -i nascab-docker-3.5.3-x64.tar
+docker tag 镜像ID nascab:3.5.3
+docker run -d \
+  --name nascab \
+  --restart=always \
+  -p 8888:80 \
+  -p 5555:90 \
+  -v /opt/data/file/Pictures:/root/Pictures \
+  -v /opt/data/file/Movies:/root/Movies \
+  -v /opt/data/file/Music:/root/Music \
+  -v /opt/data/file/Books:/root/Books \
+  -v /opt/data/file/Downloads:/root/Downloads \
+  -v /opt/data/file/privateSpace:/root/privateSpace \
+  -v /opt/data/file/nascab:/root/.local/share/nascab \
+  --log-opt max-size=10m \
+  --log-opt max-file=3 \
+  nascab:3.5.3
 ```
 
 ## moneynote
