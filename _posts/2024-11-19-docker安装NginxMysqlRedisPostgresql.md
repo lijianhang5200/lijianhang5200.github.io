@@ -28,7 +28,7 @@ docker run \
   -d nginx:1.25.3
 ```
 
-## mysql
+## mysql 8.4.3
 
 [参考网址](https://blog.csdn.net/breakaway_01/article/details/141299349)
 
@@ -198,7 +198,7 @@ docker run \
   redis-server /etc/redis/redis.conf --appendonly yes
 ```
 
-## postgresql
+## postgresql 15.8
 
 [参考网址](https://zhuanlan.zhihu.com/p/606079311)
 
