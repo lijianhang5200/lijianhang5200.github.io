@@ -246,6 +246,25 @@ exit
 sqlplus sys/new_password as sysdba
 ```
 
+## oracle21c(未测试)
+
+[参考网址](https://github.com/Dark-Athena/dockerfile/tree/main/ol8_21_oml4py)
+
+```shell
+docker run -dit \
+  --name ol8_21_con \
+  -p 1521:1521 \
+  -p 5500:5500 \
+  --shm-size="1G" \
+  -v /opt/data/file/oracle21c:/u02 \
+  registry.cn-shanghai.aliyuncs.com/darkathena/ol8_21_oml4py:2.0
+```
+
+sys用户的默认登录密码为 SysPassword1
+
+services_name=cdb1
+services_name=pdb1
+
 ## gitea
 
 ```shell
@@ -407,7 +426,7 @@ docker run -d \
   ghcr.io/corentinth/it-tools
 ```
 
-## photoview(已启用，不能使用地点，替换为nascab)
+## photoview(已弃用，不能使用地点，替换为nascab)
 
 ```shell
 docker run -d \
@@ -534,3 +553,40 @@ docker run -d  \
 1. Watchtower 默认情况下 24 小时会检查一次镜像更新。设置--interval 选项更新时间，默认单位秒。
 2. 可以使用--schedule选项， 设定定时更新任务，定时任务为6 字段来表示执行时间，第一个字段表示秒。
 3. 可以使用--cleanup 选项，这样每次更新都会把旧的镜像清理掉。
+
+## melody (镜像未找到)
+
+```shell
+docker run -d  \
+  --name melody \
+  --restart unless-stopped \
+  -p 5566:5566 \
+  -v /opt/data/file/melody:/app/backend/.profile \
+  foamzou/medoly
+```
+
+可以看到需要填写melody key后才能开始使用，默认的 melody key 为： melody
+
+## datacap
+
+[操作文档](https://datacap.devlive.org/reference/getStarted/install.html)
+
+[参考网址](https://datacap.devlive.org/reference/getStarted/installFromDockerCompose.html)
+
+```shell
+docker run -d \
+  --name datacap \
+  --restart unless-stopped \
+  -p 9096:9096 \
+  -v /opt/data/file/datacap/configure:/opt/app/datacap/configure \
+  -v /opt/data/file/datacap/plugins:/opt/app/datacap/plugins \
+  --link mysql \
+  --link redis \
+  --link postgres \
+  devliveorg/datacap
+```
+
+| Username | Password |
+| --- | --- |
+| datacap | 123456789 |
+| admin | 12345678 |
