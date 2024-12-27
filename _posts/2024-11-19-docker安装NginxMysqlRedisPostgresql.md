@@ -401,21 +401,6 @@ docker run -d \
 2. 可以使用主机的所有内核功能。
 3. 可以使用主机上所有的文件系统。
 
-## 百度云(已不能使用)
-
-[参考网址](https://blog.csdn.net/weixin_48714407/article/details/134598980)
-
-[下载地址](https://pan.baidu.com/s/1VIRX7vLwMxYTch9cpN68-w?pwd=gwe1)
-
-```shell
-docker run -itd \
-  --name baiduyunpan \
-  --restart=unless-stopped \
-  -p 5299:5299 \
-  -v /opt/data/file/Downloads:/root/Downloads \
-  baiyuetribe/baiduyunpan
-```
-
 ## it-tools
 
 ```shell
@@ -424,22 +409,6 @@ docker run -d \
   --restart=always \
   -p 8080:80 \
   ghcr.io/corentinth/it-tools
-```
-
-## photoview(已弃用，不能使用地点，替换为nascab)
-
-```shell
-docker run -d \
-  --restart=always \
-  --name photoview \
-  -p 8810:80 \
-  -v /opt/data/file/photoview/cache:/app/cache \
-  -v /opt/data/file/Pictures:/Pictures \
-  -e PHOTOVIEW_DATABASE_DRIVER=mysql \
-  -e PHOTOVIEW_MYSQL_URL=photoview:photoview@tcp\(mysql:3306\)/photoview \
-  -e PHOTOVIEW_MEDIA_CACHE=/app/cache \
-  --link mysql \
-  photoview/photoview
 ```
 
 ## nascab
@@ -525,19 +494,6 @@ crontab -e
 0 5 * * * /bin/sh ~/iptv-update.sh
 ```
 
-## allinone
-
-```shell
-docker run -d \
-  --name allinone \
-  --restart unless-stopped \
-  --net=host \
-  --privileged=true \
-  -p 35455:35455 \
-  youshandefeiyang/allinone
-
-```
-
 ## watchtower
 
 使用以下命令，更新宿主机的所有容器，也包括 Watch­tower 本身。
@@ -553,19 +509,6 @@ docker run -d  \
 1. Watchtower 默认情况下 24 小时会检查一次镜像更新。设置--interval 选项更新时间，默认单位秒。
 2. 可以使用--schedule选项， 设定定时更新任务，定时任务为6 字段来表示执行时间，第一个字段表示秒。
 3. 可以使用--cleanup 选项，这样每次更新都会把旧的镜像清理掉。
-
-## melody (镜像未找到)
-
-```shell
-docker run -d  \
-  --name melody \
-  --restart unless-stopped \
-  -p 5566:5566 \
-  -v /opt/data/file/melody:/app/backend/.profile \
-  foamzou/medoly
-```
-
-可以看到需要填写melody key后才能开始使用，默认的 melody key 为： melody
 
 ## datacap
 
@@ -590,3 +533,65 @@ docker run -d \
 | --- | --- |
 | datacap | 123456789 |
 | admin | 12345678 |
+
+
+
+## melody (只能下载MP3，部分源不能使用，不推荐)
+
+[项目地址](https://github.com/foamzou/melody)
+
+```shell
+docker run -d  \
+  --name melody \
+  --restart unless-stopped \
+  -p 5566:5566 \
+  -v /opt/data/file/melody:/app/backend/.profile \
+  -v /opt/data/file/Music:/Music \
+  foamzou/melody
+```
+
+可以看到需要填写melody key后才能开始使用，默认的 melody key 为： melody
+
+## allinone (未测试)
+
+```shell
+docker run -d \
+  --name allinone \
+  --restart unless-stopped \
+  --net=host \
+  --privileged=true \
+  -p 35455:35455 \
+  youshandefeiyang/allinone
+
+```
+
+## photoview(已弃用，不能使用地点，替换为nascab)
+
+```shell
+docker run -d \
+  --restart=always \
+  --name photoview \
+  -p 8810:80 \
+  -v /opt/data/file/photoview/cache:/app/cache \
+  -v /opt/data/file/Pictures:/Pictures \
+  -e PHOTOVIEW_DATABASE_DRIVER=mysql \
+  -e PHOTOVIEW_MYSQL_URL=photoview:photoview@tcp\(mysql:3306\)/photoview \
+  -e PHOTOVIEW_MEDIA_CACHE=/app/cache \
+  --link mysql \
+  photoview/photoview
+```
+
+## 百度云(已不能使用)
+
+[参考网址](https://blog.csdn.net/weixin_48714407/article/details/134598980)
+
+[下载地址](https://pan.baidu.com/s/1VIRX7vLwMxYTch9cpN68-w?pwd=gwe1)
+
+```shell
+docker run -itd \
+  --name baiduyunpan \
+  --restart=unless-stopped \
+  -p 5299:5299 \
+  -v /opt/data/file/Downloads:/root/Downloads \
+  baiyuetribe/baiduyunpan
+```
