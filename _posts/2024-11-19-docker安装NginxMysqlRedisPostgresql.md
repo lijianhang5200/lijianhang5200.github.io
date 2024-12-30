@@ -510,7 +510,45 @@ docker run -d  \
 2. 可以使用--schedule选项， 设定定时更新任务，定时任务为6 字段来表示执行时间，第一个字段表示秒。
 3. 可以使用--cleanup 选项，这样每次更新都会把旧的镜像清理掉。
 
-## datacap
+## alist
+
+```shell
+docker run -d \
+  --name alist \
+  --restart=always \
+  -p 5244:5244 \
+  -v /opt/data/file/alist:/opt/alist/data \
+  xhofe/alist
+
+# 修改密码
+docker exec -it alist ./alist admin
+```
+
+## splayer
+
+[项目地址](https://github.com/imsyy/SPlayer)
+
+可以下载windows应用
+
+```shell
+docker run -d \
+  --name splayer \
+  -p 25884:25884 \
+  imsyy/splayer
+```
+
+## xiaoya
+
+```shell
+docker run -d \
+   --restart unless-stopped \
+   --name xiaoya \
+   -p 8765:80 \
+   -v /opt/data/file/xiaoya/data:/data \
+   xiaoyaliu/alist
+```
+
+## datacap (数据中台，与预想功能不一致)
 
 [操作文档](https://datacap.devlive.org/reference/getStarted/install.html)
 
@@ -536,7 +574,7 @@ docker run -d \
 
 
 
-## melody (只能下载MP3，部分源不能使用，不推荐)
+## melody (只能下载MP3，部分源不能使用，不推荐，替代为 splayer)
 
 [项目地址](https://github.com/foamzou/melody)
 
@@ -581,7 +619,7 @@ docker run -d \
   photoview/photoview
 ```
 
-## 百度云(已不能使用)
+## 百度云(已不能使用，替代方案 alist)
 
 [参考网址](https://blog.csdn.net/weixin_48714407/article/details/134598980)
 
