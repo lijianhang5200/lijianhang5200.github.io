@@ -28,6 +28,17 @@ docker run \
   -d nginx:1.25.3
 ```
 
+## registry 私有仓库容器
+
+```shell
+docker run -d \
+  --name registry \
+  --restart=always \
+  -v /opt/registry:/var/lib/registry \
+  -p 5000:5000 \
+  registry:2
+```
+
 ## mysql 8.4.3
 
 [参考网址](https://blog.csdn.net/breakaway_01/article/details/141299349)
@@ -465,7 +476,7 @@ docker run -d \
   --name aipan \
   --restart=always \
   -p 3123:3000 \
-  fooololo/aipan-netdisk-search
+  unilei/aipan-netdisk-search
 ```
 
 ## iptv-sources
