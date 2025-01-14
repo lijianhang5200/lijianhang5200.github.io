@@ -436,11 +436,13 @@ docker run -d \
   --restart=always \
   -p 8888:80 \
   -p 5555:90 \
-  -v /opt/data/file/Pictures:/root/Pictures \
+  -v /opt/data/file/Books:/root/Books \
+  -v /opt/data/file/Documents:/root/Documents \
+  -v /opt/data/file/Downloads:/root/Downloads \
   -v /opt/data/file/Movies:/root/Movies \
   -v /opt/data/file/Music:/root/Music \
-  -v /opt/data/file/Books:/root/Books \
-  -v /opt/data/file/Downloads:/root/Downloads \
+  -v /opt/data/file/Pictures:/root/Pictures \
+  -v /opt/data/file/Videos:/root/Videos \
   -v /opt/data/file/privateSpace:/root/privateSpace \
   -v /opt/data/file/nascab:/root/.local/share/nascab \
   --log-opt max-size=10m \
@@ -476,8 +478,13 @@ docker run -d \
   --name aipan \
   --restart=always \
   -p 3123:3000 \
-  unilei/aipan-netdisk-search
+  fooololo/aipan-netdisk-search
 ```
+**注意**
+
+镜像 unilei/aipan-netdisk-search 功能全没有在线播放
+
+镜像 fooololo/aipan-netdisk-search 仅有网盘搜索+在线播放
 
 ## iptv-sources
 
