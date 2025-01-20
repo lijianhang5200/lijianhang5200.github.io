@@ -542,7 +542,7 @@ docker run -d \
 docker exec -it alist ./alist admin
 ```
 
-## splayer
+## splayer (替换为可以下载widows客户端)
 
 [项目地址](https://github.com/imsyy/SPlayer)
 
@@ -553,6 +553,92 @@ docker run -d \
   --name splayer \
   -p 25884:25884 \
   imsyy/splayer
+```
+
+## ChatGPT-Next-Web
+
+私人 ChatGPT 网页应用，支持 GPT3, GPT4 & Gemini Pro 模型。
+
+[参考地址](https://github.com/ChatGPTNextWeb/NextChat)
+
+## windows
+
+[参考地址](https://github.com/dockur/windows)
+
+### win10
+
+```shell
+docker run -dit \
+  --name win10 \
+  -v /work_local:/share \
+  -v /opt/data/file/Downloads/windows系统/cn_windows_10_enterprise_ltsc_2019_x64_dvd_9c09ff24.iso:/custom.iso \
+  -p 4389:4389 \
+  -p 8006:8006 \
+  --device=/dev/kvm \
+  --cap-add NET_ADMIN \
+  -e LANGUAGE="Chinese" \
+  -e REGION="en-US" \
+  -e KEYBOARD="en-US" \
+  -e RAM_SIZE="4G" \
+  -e CPU_CORES="2" \
+  -e USERNAME="admin" \
+  -e PASSWORD="123456" \
+  -e VERSION="10l" \
+  -e DISK_SIZE="64G" \
+  dockurr/windows:latest
+```
+
+### core11
+
+```shell
+docker run -it \
+  --rm \
+  --name win11 \
+  -p 8006:8006 \
+  --device=/dev/kvm \
+  --device=/dev/net/tun \
+  --cap-add NET_ADMIN \
+  --stop-timeout 120 \
+  -e CPU_CORES="2" \
+  -e RAM_SIZE="4G" \
+  -e DISK_SIZE="32G" \
+  -e USERNAME="admin" \
+  -e PASSWORD="123456" \
+  -e VERSION="core11" \
+  dockurr/windows
+```
+
+### win7
+
+```shell
+docker run -it \
+  --rm \
+  --name xp \
+  -p 8007:8006 \
+  --device=/dev/kvm \
+  --device=/dev/net/tun \
+  --cap-add NET_ADMIN \
+  --stop-timeout 120 \
+  -e RAM_SIZE="1G" \
+  -e VERSION="7e" \
+  dockurr/windows
+```
+
+### win XP
+
+```shell
+docker run -it \
+  --rm \
+  --name xp \
+  -p 8007:8006 \
+  --device=/dev/kvm \
+  --device=/dev/net/tun \
+  --cap-add NET_ADMIN \
+  --stop-timeout 120 \
+  -e RAM_SIZE="1G" \
+  -e DISK_SIZE="32G" \
+  -e VERSION="xp" \
+  dockurr/windows
 ```
 
 ## xiaoya
@@ -650,4 +736,14 @@ docker run -itd \
   -p 5299:5299 \
   -v /opt/data/file/Downloads:/root/Downloads \
   baiyuetribe/baiduyunpan
+```
+
+## plantuml (改使用idea插件形式)
+
+```shell
+docker run -d \
+  --name plantuml \
+  --restart unless-stopped \
+  -p 8284:8080 \
+  plantuml/plantuml-server
 ```
