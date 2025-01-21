@@ -542,6 +542,20 @@ docker run -d \
 docker exec -it alist ./alist admin
 ```
 
+## nextcloud (不能进行多目录配置上传)
+
+```shell
+docker run -d \
+  --name nextcloud \
+  --restart=always \
+  -p 8085:80 \
+  -v /opt/data/file/nextcloud/data:/var/www/html/data \
+  -v /opt/data/file/nextcloud/apps:/var/www/html/apps \
+  -v /opt/data/file/nextcloud/config:/var/www/html/config \
+  --link mysql \
+  nextcloud
+```
+
 ## splayer (替换为可以下载widows客户端)
 
 [项目地址](https://github.com/imsyy/SPlayer)
