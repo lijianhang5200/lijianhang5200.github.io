@@ -556,6 +556,19 @@ docker run -d \
   nextcloud
 ```
 
+## openwrt
+
+```shell
+docker run -itd \
+  --name=OneCloud \
+  --restart=always \
+  --network=macnet \
+  --privileged=true \
+  virking/openwrt:20.04 \
+  /sbin/init
+```
+
+
 ## splayer (替换为可以下载widows客户端)
 
 [项目地址](https://github.com/imsyy/SPlayer)
