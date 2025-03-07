@@ -429,8 +429,8 @@ docker run -d \
 [下载地址](https://pan.baidu.com/e/1FiBdoAliwnOxzf7YuVDJIw?pwd=rjt2)
 
 ```shell
-docker load -i nascab-docker-3.5.3-x64.tar
-docker tag 镜像ID nascab:3.5.3
+docker load -i nascab-docker-3.5.4-x64.tar
+docker tag 镜像ID nascab:3.5.4
 docker run -d \
   --name nascab \
   --restart=always \
@@ -445,9 +445,9 @@ docker run -d \
   -v /opt/data/file/Videos:/root/Videos \
   -v /opt/data/file/privateSpace:/root/privateSpace \
   -v /opt/data/file/nascab:/root/.local/share/nascab \
-  --log-opt max-size=10m \
+  --log-opt max-size=128m \
   --log-opt max-file=3 \
-  nascab:3.5.3
+  nascab:3.5.4
 ```
 
 ## moneynote
@@ -568,6 +568,32 @@ docker run -itd \
   /sbin/init
 ```
 
+## mi-gpt
+
+```shell
+.env 参考 https://github.com/idootop/mi-gpt/blob/main/.env.example
+echo "
+OPENAI_MODEL=ep-xxxxxxxxx-gh4jr
+OPENAI_API_KEY="xxxxx"
+OPENAI_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
+" > /opt/data/file/migpt/.env
+.migpt.js 参考 https://github.com/idootop/mi-gpt/blob/main/.migpt.example.js
+echo "
+// 小米ID
+userId=""
+// 账号密码
+password="xxxxx"
+// 小爱音箱did或在米家中设置名称
+did= "小爱音箱Pro"
+" > /opt/data/file/migpt/.migpt.js
+
+docker run -d\
+  --name migpt \
+  --restart=always \
+  --env-file /opt/data/file/migpt/.env \
+  -v         /opt/data/file/migpt/.migpt.js:/app/.migpt.js \
+  idootop/mi-gpt
+```
 
 ## splayer (替换为可以下载widows客户端)
 
