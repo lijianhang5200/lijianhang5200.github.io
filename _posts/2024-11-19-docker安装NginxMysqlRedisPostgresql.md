@@ -521,7 +521,7 @@ docker run -d  \
   --name watchtower \
   --restart always \
   --volume /var/run/docker.sock:/var/run/docker.sock \
-  containrrr/watchtower
+  containrrr/watchtower --cleanup --interval 3600 ${容器名1} ${容器名2}
 ```
 
 1. Watchtower 默认情况下 24 小时会检查一次镜像更新。设置--interval 选项更新时间，默认单位秒。
@@ -540,6 +540,18 @@ docker run -d \
 
 # 修改密码
 docker exec -it alist ./alist admin
+```
+
+## vscode
+
+```shell
+docker run -itd \
+  --name vscode \
+  -p 9005:8080 \
+  -e PASSWORD=123456 \
+  -v /opt/data/file/vscode:/home/coder \
+  codercom/code-server
+
 ```
 
 ## nextcloud (不能进行多目录配置上传)
@@ -587,7 +599,7 @@ password="xxxxx"
 did= "小爱音箱Pro"
 " > /opt/data/file/migpt/.migpt.js
 
-docker run -d\
+docker run -d \
   --name migpt \
   --restart=always \
   --env-file /opt/data/file/migpt/.env \
