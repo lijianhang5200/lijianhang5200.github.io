@@ -551,7 +551,21 @@ docker run -itd \
   -e PASSWORD=123456 \
   -v /opt/data/file/vscode:/home/coder \
   codercom/code-server
+```
 
+## instock
+
+```shell
+docker run -dit \
+  --name instock \
+  -p 9988:9988 \
+  -e db_host=mysql \
+  -e db_user=instockdb \
+  -e db_password=instockdb \
+  -e db_database=instockdb \
+  -e db_port=3306 \
+  --link mysql \
+  mayanghua/instock
 ```
 
 ## nextcloud (不能进行多目录配置上传)
