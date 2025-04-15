@@ -594,6 +594,34 @@ docker run -itd \
   /sbin/init
 ```
 
+## open-webui
+
+```
+docker run -d \
+  --name open-webui \
+  --restart always \
+  -p 3080:8080 \
+  -v /opt/data/file/open-webui:/app/backend/data \
+  -e WEBUI_SECRET_KEY=123456 \
+  -e OPENAI_API_BASE_URL=https://api.siliconflow.cn/v1 \
+  -e OPENAI_API_KEY=sk-xxxx \
+  -e DEFAULT_MODELS=deepseek-ai/DeepSeek-V3 \
+  ghcr.io/open-webui/open-webui:main
+
+```
+
+## xiaomusic
+
+```
+docker run -d \
+  --name xiaomusic \
+  --restart=always \
+  -p 8090:8090 \
+  -v /opt/data/file/xiaomusic/music:/app/music \
+  -v /opt/data/file/xiaomusic/conf:/app/conf \
+  hanxi/xiaomusic
+```
+
 ## mi-gpt
 
 ```shell
@@ -619,6 +647,21 @@ docker run -d \
   --env-file /opt/data/file/migpt/.env \
   -v         /opt/data/file/migpt/.migpt.js:/app/.migpt.js \
   idootop/mi-gpt
+```
+
+## newsnow
+
+```
+docker run -d \
+  --name newsnow \
+  --restart=always \
+  -p 4444:4444 \
+  -e G_CLIENT_ID=  \
+  -e G_CLIENT_SECRET=  \
+  -e JWT_SECRET=  \
+  -e INIT_TABLE=true \
+  -e ENABLE_CACHE=true \
+  ghcr.nju.edu.cn/ourongxing/newsnow
 ```
 
 ## splayer (替换为可以下载widows客户端)
