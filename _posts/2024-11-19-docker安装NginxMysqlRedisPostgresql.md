@@ -12,19 +12,19 @@ excerpt: docker安装nginx/mysql/redis/postgresql。
 
 ```shell
 docker run --name nginx -p 80:80 -d nginx:1.25.3
-mkdir -p /opt/data/file/nginx
-docker cp nginx:/etc/nginx/ /opt/data/file/nginx
-docker cp nginx:/usr/share/nginx/html /opt/data/file/nginx
+mkdir -p /opt/nginx
+docker cp nginx:/etc/nginx/ /opt/nginx
+docker cp nginx:/usr/share/nginx/html /opt/nginx
 docker rm -f nginx
 docker run \
   --name nginx \
   -p 80:80 \
   --restart=always \
-  -v /opt/data/file/nginx/nginx/nginx.conf:/etc/nginx/nginx.conf \
-  -v /opt/data/file/nginx/nginx/conf.d:/etc/nginx/conf.d \
-  -v /opt/data/file/nginx/logs:/var/log/nginx \
-  -v /opt/data/file/nginx/html:/usr/share/nginx/html \
-  -v /opt/data/file/nginx/admin-top:/usr/share/nginx/admin-top \
+  -v /opt/nginx/nginx/nginx.conf:/etc/nginx/nginx.conf \
+  -v /opt/nginx/nginx/conf.d:/etc/nginx/conf.d \
+  -v /opt/nginx/logs:/var/log/nginx \
+  -v /opt/nginx/html:/usr/share/nginx/html \
+  -v /opt/nginx/admin-top:/usr/share/nginx/admin-top \
   -d nginx:1.25.3
 ```
 
@@ -60,8 +60,8 @@ docker run -d \
 [参考网址](https://blog.csdn.net/qq_40104261/article/details/120738742)
 
 ```shell
-mkdir -p /opt/data/file/redis/conf
-cd /opt/data/file/redis/conf
+mkdir -p /opt/redis/conf
+cd /opt/redis/conf
 cat > redis.conf <<- EOF
 # Redis configuration file example.
 ################################## INCLUDES ###################################
@@ -203,8 +203,8 @@ docker run \
   --name redis \
   -p 6379:6379 \
   --restart=always \
-  -v /opt/data/file/redis/conf/redis.conf:/etc/redis/redis.conf \
-  -v /opt/data/file/redis/data:/data \
+  -v /opt/redis/conf/redis.conf:/etc/redis/redis.conf \
+  -v /opt/redis/data:/data \
   -d redis:5.0 \
   redis-server /etc/redis/redis.conf --appendonly yes
 ```
@@ -267,7 +267,7 @@ docker run -dit \
   -p 1521:1521 \
   -p 5500:5500 \
   --shm-size="1G" \
-  -v /opt/data/file/oracle21c:/u02 \
+  -v /opt/oracle21c:/u02 \
   registry.cn-shanghai.aliyuncs.com/darkathena/ol8_21_oml4py:2.0
 ```
 
@@ -292,7 +292,7 @@ docker run -d \
   -e GITEA__database__NAME=gitea \
   -e GITEA__database__USER=gitea \
   -e GITEA__database__PASSWD=gitea \
-  -v /opt/data/file/gitea:/data \
+  -v /opt/gitea:/data \
   -v /etc/timezone:/etc/timezone:ro \
   -v /etc/localtime:/etc/localtime:ro \
   --link mysql \
@@ -304,7 +304,7 @@ docker run -d \
 [参考网址](https://blog.csdn.net/zhaoxichen_10/article/details/118446721)
 
 ```shell
-mkdir -p /opt/data/file/xxl-job/admin/logs
+mkdir -p /opt/xxl-job/admin/logs
 docker run \
   --name xxl-job-admin \
   -p 18080:8080 \
@@ -315,7 +315,7 @@ docker run \
   --spring.datasource.username=root \
   --spring.datasource.password=root \
   --xxl.job.accessToken=123456" \
-  -v /opt/data/file/xxl-job/admin/logs:/data/applogs \
+  -v /opt/xxl-job/admin/logs:/data/applogs \
   --privileged=true \
   -d xuxueli/xxl-job-admin:2.4.1
 ```
@@ -330,16 +330,16 @@ docker run \
 [参考网址](https://developer.baidu.com/article/details/3252534)
 
 ```shell
-mkdir -p /opt/data/file/adguardhome/work
-mkdir -p /opt/data/file/adguardhome/conf
+mkdir -p /opt/adguardhome/work
+mkdir -p /opt/adguardhome/conf
 docker run \
   --name adguardhome \
   --restart=always \
   -p 6053:53/tcp \
   -p 6053:53/udp \
   -p 3000:3000/tcp \
-  -v /opt/data/file/adguardhome/conf:/opt/adguardhome/conf \
-  -v /opt/data/file/adguardhome/work:/opt/adguardhome/work \
+  -v /opt/adguardhome/conf:/opt/adguardhome/conf \
+  -v /opt/adguardhome/work:/opt/adguardhome/work \
   -d adguard/adguardhome
 ```
 
@@ -351,7 +351,7 @@ docker run -dit \
   --hostname qinglong \
   --restart=unless-stopped \
   -p 5700:5700 \
-  -v /opt/data/file/qinglong/data:/ql/data \
+  -v /opt/qinglong/data:/ql/data \
   whyour/qinglong
 ```
 
@@ -366,13 +366,13 @@ docker run -d \
   -p 22000:22000/udp \
   -p 21027:21027/udp \
   -e TZ=Asia/Shanghai \
-  -v /opt/data/file/syncthing/config:/var/syncthing/config \
-  -v /opt/data/file/syncthing/files:/var/syncthing/files \
-  -v /opt/data/file/Pictures/Camera:/var/syncthing/Camera \
-  -v /opt/data/file/Pictures/Screenshots:/var/syncthing/Screenshots \
-  -v /opt/data/file/Pictures/Weixin:/var/syncthing/Weixin \
-  -v /opt/data/file/Pictures/Collage:/var/syncthing/Collage \
-  -v /opt/data/file/Pictures/Douyin:/var/syncthing/Douyin \
+  -v /opt/syncthing/config:/var/syncthing/config \
+  -v /opt/syncthing/files:/var/syncthing/files \
+  -v /opt/Pictures/Camera:/var/syncthing/Camera \
+  -v /opt/Pictures/Screenshots:/var/syncthing/Screenshots \
+  -v /opt/Pictures/Weixin:/var/syncthing/Weixin \
+  -v /opt/Pictures/Collage:/var/syncthing/Collage \
+  -v /opt/Pictures/Douyin:/var/syncthing/Douyin \
   syncthing/syncthing
 ```
 
@@ -383,7 +383,7 @@ docker run -d \
   --name=homeassistant \
   --restart=unless-stopped \
   -p 8123:8123 \
-  -v /opt/data/file/homeassistant:/config \
+  -v /opt/homeassistant:/config \
   -e TZ=Asia/Shanghai \
   ghcr.io/home-assistant/home-assistant:stable
 ```
@@ -400,8 +400,8 @@ docker run -d \
   --restart=unless-stopped \
   --privileged \
   -p 2345:2345 \
-  -v /opt/data/file/xunlei:/xunlei/data \
-  -v /opt/data/file/Downloads:/xunlei/downloads \
+  -v /opt/xunlei:/xunlei/data \
+  -v /opt/Downloads:/xunlei/downloads \
   cnk3x/xunlei
 ```
 
@@ -411,16 +411,6 @@ docker run -d \
 1. 拥有访问主机上所有设备的权限。
 2. 可以使用主机的所有内核功能。
 3. 可以使用主机上所有的文件系统。
-
-## it-tools
-
-```shell
-docker run -d \
-  --name it-tools \
-  --restart=always \
-  -p 8080:80 \
-  ghcr.io/corentinth/it-tools
-```
 
 ## nascab
 
@@ -436,15 +426,15 @@ docker run -d \
   --restart=always \
   -p 8888:80 \
   -p 5555:90 \
-  -v /opt/data/file/Books:/root/Books \
-  -v /opt/data/file/Documents:/root/Documents \
-  -v /opt/data/file/Downloads:/root/Downloads \
-  -v /opt/data/file/Movies:/root/Movies \
-  -v /opt/data/file/Music:/root/Music \
-  -v /opt/data/file/Pictures:/root/Pictures \
-  -v /opt/data/file/Videos:/root/Videos \
-  -v /opt/data/file/privateSpace:/root/privateSpace \
-  -v /opt/data/file/nascab:/root/.local/share/nascab \
+  -v /opt/Books:/root/Books \
+  -v /opt/Documents:/root/Documents \
+  -v /opt/Downloads:/root/Downloads \
+  -v /opt/Movies:/root/Movies \
+  -v /opt/Music:/root/Music \
+  -v /opt/Pictures:/root/Pictures \
+  -v /opt/Videos:/root/Videos \
+  -v /opt/privateSpace:/root/privateSpace \
+  -v /opt/nascab:/root/.local/share/nascab \
   --log-opt max-size=128m \
   --log-opt max-file=3 \
   nascab:3.5.4
@@ -535,7 +525,7 @@ docker run -d \
   --name alist \
   --restart=always \
   -p 5244:5244 \
-  -v /opt/data/file/alist:/opt/alist/data \
+  -v /opt/alist:/opt/alist/data \
   xhofe/alist
 
 # 修改密码
@@ -549,7 +539,7 @@ docker run -itd \
   --name vscode \
   -p 9005:8080 \
   -e PASSWORD=123456 \
-  -v /opt/data/file/vscode:/home/coder \
+  -v /opt/vscode:/home/coder \
   codercom/code-server
 ```
 
@@ -575,9 +565,9 @@ docker run -d \
   --name nextcloud \
   --restart=always \
   -p 8085:80 \
-  -v /opt/data/file/nextcloud/data:/var/www/html/data \
-  -v /opt/data/file/nextcloud/apps:/var/www/html/apps \
-  -v /opt/data/file/nextcloud/config:/var/www/html/config \
+  -v /opt/nextcloud/data:/var/www/html/data \
+  -v /opt/nextcloud/apps:/var/www/html/apps \
+  -v /opt/nextcloud/config:/var/www/html/config \
   --link mysql \
   nextcloud
 ```
@@ -594,20 +584,20 @@ docker run -itd \
   /sbin/init
 ```
 
-## open-webui
+## openwebui
 
 ```
 docker run -d \
-  --name open-webui \
+  --name openwebui \
   --restart always \
   -p 3080:8080 \
-  -v /opt/data/file/open-webui:/app/backend/data \
+  -v /opt/openwebui:/app/backend/data \
   -e WEBUI_SECRET_KEY=123456 \
   -e OPENAI_API_BASE_URL=https://api.siliconflow.cn/v1 \
   -e OPENAI_API_KEY=sk-xxxx \
   -e DEFAULT_MODELS=deepseek-ai/DeepSeek-V3 \
+  -e local_files_only=True \
   ghcr.io/open-webui/open-webui:main
-
 ```
 
 ## xiaomusic
@@ -617,8 +607,8 @@ docker run -d \
   --name xiaomusic \
   --restart=always \
   -p 8090:8090 \
-  -v /opt/data/file/xiaomusic/music:/app/music \
-  -v /opt/data/file/xiaomusic/conf:/app/conf \
+  -v /opt/xiaomusic/music:/app/music \
+  -v /opt/xiaomusic/conf:/app/conf \
   hanxi/xiaomusic
 ```
 
@@ -630,7 +620,7 @@ echo "
 OPENAI_MODEL=ep-xxxxxxxxx-gh4jr
 OPENAI_API_KEY="xxxxx"
 OPENAI_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
-" > /opt/data/file/migpt/.env
+" > /opt/migpt/.env
 .migpt.js 参考 https://github.com/idootop/mi-gpt/blob/main/.migpt.example.js
 echo "
 // 小米ID
@@ -639,13 +629,13 @@ userId=""
 password="xxxxx"
 // 小爱音箱did或在米家中设置名称
 did= "小爱音箱Pro"
-" > /opt/data/file/migpt/.migpt.js
+" > /opt/migpt/.migpt.js
 
 docker run -d \
   --name migpt \
   --restart=always \
-  --env-file /opt/data/file/migpt/.env \
-  -v         /opt/data/file/migpt/.migpt.js:/app/.migpt.js \
+  --env-file /opt/migpt/.env \
+  -v         /opt/migpt/.migpt.js:/app/.migpt.js \
   idootop/mi-gpt
 ```
 
@@ -662,6 +652,56 @@ docker run -d \
   -e INIT_TABLE=true \
   -e ENABLE_CACHE=true \
   ghcr.nju.edu.cn/ourongxing/newsnow
+```
+
+## win11
+
+[参考地址](https://github.com/dockur/windows)
+
+```shell
+docker run -dit \
+  --rm \
+  --name win11 \
+  --restart=always \
+  -p 8006:8006 \
+  --device=/dev/kvm \
+  --device=/dev/net/tun \
+  --cap-add NET_ADMIN \
+  --stop-timeout 120 \
+  -e LANGUAGE="Chinese" \
+  -e REGION="en-US" \
+  -e KEYBOARD="en-US" \
+  -e CPU_CORES="4" \
+  -e RAM_SIZE="8G" \
+  -e DISK_SIZE="64G" \
+  -e USERNAME="Administrator" \
+  -e PASSWORD="" \
+  -e VERSION="11" \
+  -v /opt/win11:/storage \
+  dockurr/windows
+```
+
+--rm：容器停止自动删除容器
+  
+## xiaoya
+
+```shell
+docker run -d \
+   --restart unless-stopped \
+   --name xiaoya \
+   -p 8765:80 \
+   -v /opt/xiaoya/data:/data \
+   xiaoyaliu/alist
+```
+
+## it-tools
+
+```shell
+docker run -d \
+  --name it-tools \
+  --restart=always \
+  -p 8080:80 \
+  ghcr.io/corentinth/it-tools
 ```
 
 ## splayer (替换为可以下载widows客户端)
@@ -683,97 +723,6 @@ docker run -d \
 
 [参考地址](https://github.com/ChatGPTNextWeb/NextChat)
 
-## windows
-
-[参考地址](https://github.com/dockur/windows)
-
-### win10
-
-```shell
-docker run -dit \
-  --name win10 \
-  -v /work_local:/share \
-  -v /opt/data/file/Downloads/windows系统/cn_windows_10_enterprise_ltsc_2019_x64_dvd_9c09ff24.iso:/custom.iso \
-  -p 4389:4389 \
-  -p 8006:8006 \
-  --device=/dev/kvm \
-  --cap-add NET_ADMIN \
-  -e LANGUAGE="Chinese" \
-  -e REGION="en-US" \
-  -e KEYBOARD="en-US" \
-  -e RAM_SIZE="4G" \
-  -e CPU_CORES="2" \
-  -e USERNAME="admin" \
-  -e PASSWORD="123456" \
-  -e VERSION="10l" \
-  -e DISK_SIZE="64G" \
-  dockurr/windows:latest
-```
-
-### core11
-
-```shell
-docker run -it \
-  --rm \
-  --name win11 \
-  -p 8006:8006 \
-  --device=/dev/kvm \
-  --device=/dev/net/tun \
-  --cap-add NET_ADMIN \
-  --stop-timeout 120 \
-  -e CPU_CORES="2" \
-  -e RAM_SIZE="4G" \
-  -e DISK_SIZE="32G" \
-  -e USERNAME="admin" \
-  -e PASSWORD="123456" \
-  -e VERSION="core11" \
-  dockurr/windows
-```
-
-### win7
-
-```shell
-docker run -it \
-  --rm \
-  --name xp \
-  -p 8007:8006 \
-  --device=/dev/kvm \
-  --device=/dev/net/tun \
-  --cap-add NET_ADMIN \
-  --stop-timeout 120 \
-  -e RAM_SIZE="1G" \
-  -e VERSION="7e" \
-  dockurr/windows
-```
-
-### win XP
-
-```shell
-docker run -it \
-  --rm \
-  --name xp \
-  -p 8007:8006 \
-  --device=/dev/kvm \
-  --device=/dev/net/tun \
-  --cap-add NET_ADMIN \
-  --stop-timeout 120 \
-  -e RAM_SIZE="1G" \
-  -e DISK_SIZE="32G" \
-  -e VERSION="xp" \
-  dockurr/windows
-```
-
-## xiaoya
-
-```shell
-docker run -d \
-   --restart unless-stopped \
-   --name xiaoya \
-   -p 8765:80 \
-   -v /opt/data/file/xiaoya/data:/data \
-   xiaoyaliu/alist
-```
-
 ## datacap (数据中台，与预想功能不一致)
 
 [操作文档](https://datacap.devlive.org/reference/getStarted/install.html)
@@ -785,8 +734,8 @@ docker run -d \
   --name datacap \
   --restart unless-stopped \
   -p 9096:9096 \
-  -v /opt/data/file/datacap/configure:/opt/app/datacap/configure \
-  -v /opt/data/file/datacap/plugins:/opt/app/datacap/plugins \
+  -v /opt/datacap/configure:/opt/app/datacap/configure \
+  -v /opt/datacap/plugins:/opt/app/datacap/plugins \
   --link mysql \
   --link redis \
   --link postgres \
@@ -809,8 +758,8 @@ docker run -d  \
   --name melody \
   --restart unless-stopped \
   -p 5566:5566 \
-  -v /opt/data/file/melody:/app/backend/.profile \
-  -v /opt/data/file/Music:/Music \
+  -v /opt/melody:/app/backend/.profile \
+  -v /opt/Music:/Music \
   foamzou/melody
 ```
 
@@ -836,8 +785,8 @@ docker run -d \
   --restart=always \
   --name photoview \
   -p 8810:80 \
-  -v /opt/data/file/photoview/cache:/app/cache \
-  -v /opt/data/file/Pictures:/Pictures \
+  -v /opt/photoview/cache:/app/cache \
+  -v /opt/Pictures:/Pictures \
   -e PHOTOVIEW_DATABASE_DRIVER=mysql \
   -e PHOTOVIEW_MYSQL_URL=photoview:photoview@tcp\(mysql:3306\)/photoview \
   -e PHOTOVIEW_MEDIA_CACHE=/app/cache \
@@ -856,7 +805,7 @@ docker run -itd \
   --name baiduyunpan \
   --restart=unless-stopped \
   -p 5299:5299 \
-  -v /opt/data/file/Downloads:/root/Downloads \
+  -v /opt/Downloads:/root/Downloads \
   baiyuetribe/baiduyunpan
 ```
 
