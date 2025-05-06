@@ -205,7 +205,7 @@ docker run \
   --restart=always \
   -v /opt/redis/conf/redis.conf:/etc/redis/redis.conf \
   -v /opt/redis/data:/data \
-  -d redis:5.0 \
+  -d redis:7.4 \
   redis-server /etc/redis/redis.conf --appendonly yes
 ```
 
@@ -295,7 +295,7 @@ docker run -d \
   -v /opt/gitea:/data \
   -v /etc/timezone:/etc/timezone:ro \
   -v /etc/localtime:/etc/localtime:ro \
-  --link mysql \
+  --network mysql \
   gitea/gitea
 ```
 
@@ -309,7 +309,7 @@ docker run \
   --name xxl-job-admin \
   -p 18080:8080 \
   --restart=always \
-  --link mysql \
+  --network mysql \
   -e PARAMS="\
   --spring.datasource.url=jdbc:mysql://mysql:3306/xxl_job?Unicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false \
   --spring.datasource.username=root \
@@ -335,8 +335,8 @@ mkdir -p /opt/adguardhome/conf
 docker run \
   --name adguardhome \
   --restart=always \
-  -p 6053:53/tcp \
-  -p 6053:53/udp \
+  -p 53:53/tcp \
+  -p 53:53/udp \
   -p 3000:3000/tcp \
   -v /opt/adguardhome/conf:/opt/adguardhome/conf \
   -v /opt/adguardhome/work:/opt/adguardhome/work \
@@ -457,7 +457,7 @@ docker run -d \
   -e DB_USER=moneynote \
   -e DB_PASSWORD=moneynote \
   -e invite_code=moneynote \
-  --link mysql \
+  --network mysql \
   moneynote/moneynote-all-no-mysql
 ```
 
@@ -554,7 +554,7 @@ docker run -dit \
   -e db_password=instockdb \
   -e db_database=instockdb \
   -e db_port=3306 \
-  --link mysql \
+  --network mysql \
   mayanghua/instock
 ```
 
@@ -568,7 +568,7 @@ docker run -d \
   -v /opt/nextcloud/data:/var/www/html/data \
   -v /opt/nextcloud/apps:/var/www/html/apps \
   -v /opt/nextcloud/config:/var/www/html/config \
-  --link mysql \
+  --network mysql \
   nextcloud
 ```
 
@@ -589,7 +589,7 @@ docker run -itd \
 ```
 docker run -d \
   --name openwebui \
-  --restart always \
+  --restart=always \
   -p 3080:8080 \
   -v /opt/openwebui:/app/backend/data \
   -e WEBUI_SECRET_KEY=123456 \
@@ -660,17 +660,15 @@ docker run -d \
 
 ```shell
 docker run -dit \
-  --rm \
   --name win11 \
-  --restart=always \
   -p 8006:8006 \
   --device=/dev/kvm \
   --device=/dev/net/tun \
   --cap-add NET_ADMIN \
   --stop-timeout 120 \
   -e LANGUAGE="Chinese" \
-  -e REGION="en-US" \
-  -e KEYBOARD="en-US" \
+  -e REGION="zh-CN" \
+  -e KEYBOARD="zh-CN" \
   -e CPU_CORES="4" \
   -e RAM_SIZE="8G" \
   -e DISK_SIZE="64G" \
@@ -678,11 +676,12 @@ docker run -dit \
   -e PASSWORD="" \
   -e VERSION="11" \
   -v /opt/win11:/storage \
+  -v /data:/data \
   dockurr/windows
 ```
 
 --rm：容器停止自动删除容器
-  
+
 ## xiaoya
 
 ```shell
@@ -736,7 +735,7 @@ docker run -d \
   -p 9096:9096 \
   -v /opt/datacap/configure:/opt/app/datacap/configure \
   -v /opt/datacap/plugins:/opt/app/datacap/plugins \
-  --link mysql \
+  --network mysql \
   --link redis \
   --link postgres \
   devliveorg/datacap
@@ -790,7 +789,7 @@ docker run -d \
   -e PHOTOVIEW_DATABASE_DRIVER=mysql \
   -e PHOTOVIEW_MYSQL_URL=photoview:photoview@tcp\(mysql:3306\)/photoview \
   -e PHOTOVIEW_MEDIA_CACHE=/app/cache \
-  --link mysql \
+  --network mysql \
   photoview/photoview
 ```
 
