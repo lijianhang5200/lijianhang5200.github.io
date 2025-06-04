@@ -440,6 +440,31 @@ docker run -d \
   nascab:3.5.4
 ```
 
+## samba
+
+```
+docker cp samba:/usr/bin/samba.sh /opt/samba/
+docker run -itd \
+  --name samba \
+  --restart=always \
+  -p 139:139 \
+  -p 445:445 \
+  -v /opt/samba/samba.sh:/usr/bin/samba.sh \
+  -v /data/Books:/data/Books \
+  -v /data/Documents:/data/Documents \
+  -v /data/Downloads:/data/Downloads \
+  -v /data/Movies:/data/Movies \
+  -v /data/Music:/data/Music \
+  -v /data/Pictures:/data/Pictures \
+  -v /data/Videos:/data/Videos \
+  dperson/samba -p \
+  -u "lijianhang;lijianhang" \
+  -s "home;/data/;yes;no;no;lijianhang;lijianhang;lijianhang" \
+  -w "WORKGROUP" \
+  -g "force user=lijianhang" \
+  -g "guest account=lijianhang"
+```
+
 ## moneynote
 
 [参考网址](https://github.com/getmoneynote/docker-compose-moneynote-ali)
@@ -532,6 +557,20 @@ docker run -d \
 docker exec -it alist ./alist admin
 ```
 
+## bitwarden
+
+```
+docker run -d \
+  --name bitwarden \
+  --restart on-failure \
+  -v /opt/bitwarden:/data \
+  -e WEBSOCKET_ENABLED=true \
+  -e SIGNUPS_ALLOWED=true \
+  -p 127:80 \
+  -p 3012:3012 \
+  vaultwarden/server
+```
+
 ## vscode
 
 ```shell
@@ -540,7 +579,7 @@ docker run -itd \
   -p 9005:8080 \
   -e PASSWORD=123456 \
   -v /opt/vscode:/home/coder \
-  codercom/code-server
+  codercom/code-server:opensuse
 ```
 
 ## instock
