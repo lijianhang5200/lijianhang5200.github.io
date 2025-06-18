@@ -557,6 +557,34 @@ docker run -d \
 docker exec -it alist ./alist admin
 ```
 
+## aria2
+
+```shell
+docker run -d \
+  --name=aria2 \
+  --restart unless-stopped \
+  -e TZ=Asia/Shanghai \
+  -p 6080:80 \
+  -p 6443:443 \
+  -p 6800:6800 \
+  -p 6881-6999:6881-6999 \
+  -v /opt/aria2/aria2.conf:/etc/aria2.conf \
+  -v /data/Downloads:/var/lib/aria2/downloads \
+  snowdreamtech/aria2:webui
+```
+
+## 百度云盘
+
+```shell
+docker run -d \
+  --name=baidunetdisk \
+  -p 5800:5800 \
+  -v /opt/baidunetdisk:/config \
+  -v /data/Downloads:/config/baidunetdiskdownload \
+  --restart unless-stopped \
+  johngong/baidunetdisk:latest
+```
+
 ## bitwarden
 
 ```
