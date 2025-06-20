@@ -749,6 +749,24 @@ docker run -dit \
 
 --rm：容器停止自动删除容器
 
+## 
+
+```shell
+docker run -d \
+  --name easynvr \
+  --restart always \
+  --network host \
+  --log-opt max-size=50M \
+  -v "/opt/easynvr/configs:/app/configs" \
+  -v "/opt/easynvr/logs:/app/logs" \
+  -v "/opt/easynvr/temporary:/app/temporary" \
+  -v "/opt/easynvr/r:/app/r" \
+  -v "/opt/easynvr/stream:/app/stream" \
+  registry.cn-shanghai.aliyuncs.com/rustc/easynvr_amd64
+```
+
+http://localhost:10000/
+
 ## xiaoya
 
 ```shell
