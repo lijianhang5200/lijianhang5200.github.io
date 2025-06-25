@@ -426,14 +426,14 @@ docker run -d \
   --restart=always \
   -p 8888:80 \
   -p 5555:90 \
-  -v /opt/Books:/root/Books \
-  -v /opt/Documents:/root/Documents \
-  -v /opt/Downloads:/root/Downloads \
-  -v /opt/Movies:/root/Movies \
-  -v /opt/Music:/root/Music \
-  -v /opt/Pictures:/root/Pictures \
-  -v /opt/Videos:/root/Videos \
-  -v /opt/privateSpace:/root/privateSpace \
+  -v /data/Books:/root/Books \
+  -v /data/Documents:/root/Documents \
+  -v /data/Downloads:/root/Downloads \
+  -v /data/Movies:/root/Movies \
+  -v /data/Music:/root/Music \
+  -v /data/Pictures:/root/Pictures \
+  -v /data/Videos:/root/Videos \
+  -v /data/privateSpace:/root/privateSpace \
   -v /opt/nascab:/root/.local/share/nascab \
   --log-opt max-size=128m \
   --log-opt max-file=3 \
