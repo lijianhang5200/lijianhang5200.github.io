@@ -729,6 +729,8 @@ docker run -d \
 docker run -dit \
   --name win11 \
   -p 8006:8006 \
+  -p 3389:3389/tcp \
+  -p 3389:3389/udp \
   --device=/dev/kvm \
   --device=/dev/net/tun \
   --cap-add NET_ADMIN \
@@ -749,7 +751,46 @@ docker run -dit \
 
 --rm：容器停止自动删除容器
 
-## 
+自定义iso,没有磁盘能够被选择安装
+
+```shell
+docker run -dit \
+  --name win11j \
+  -p 8007:8006 \
+  -p 3390:3389/tcp \
+  -p 3390:3389/udp \
+  --device=/dev/kvm \
+  --device=/dev/net/tun \
+  --cap-add NET_ADMIN \
+  --stop-timeout 120 \
+  -e LANGUAGE="Chinese" \
+  -e REGION="zh-CN" \
+  -e KEYBOARD="zh-CN" \
+  -e CPU_CORES="4" \
+  -e RAM_SIZE="8G" \
+  -e DISK_SIZE="64G" \
+  -e USERNAME="Administrator" \
+  -e PASSWORD="" \
+  -v /opt/win11j:/storage \
+  -v /data:/data \
+  -v /data/Downloads/windows_iso/'【不忘初心游戏版】Windows11_23H2_22631.2861_X64_无更新[精简版][2.59G](2024.01.01).iso':/boot.iso \
+  dockurr/windows
+```
+
+## Android(不好用)
+
+```shell
+docker run -d \
+  --name android \
+  -p 8007:6080 \
+  --device /dev/kvm \
+  -e EMULATOR_DEVICE="Samsung Galaxy S10" \
+  -e WEB_VNC=true \
+  budtmo/docker-android:emulator_11.0
+```
+  -v /opt/android:/home/androidusr \
+
+## EasyNVR
 
 ```shell
 docker run -d \
