@@ -348,7 +348,6 @@ docker run \
 ```shell
 docker run -dit \
   --name qinglong \
-  --hostname qinglong \
   --restart=unless-stopped \
   -p 5700:5700 \
   -v /opt/qinglong/data:/ql/data \
@@ -829,6 +828,33 @@ docker run -d \
   ghcr.io/corentinth/it-tools
 ```
 
+## registry
+
+```shell
+docker run -itd \
+  --name registry \
+  --restart always \
+  -p 5000:5000 \
+  -v /opt/registry:/var/lib/registry \
+  registry
+
+docker run -d \
+  --name registry-ui \
+  -p 8280:80 \
+  -e SINGLE_REGISTRY="true" \
+  -e REGISTRY_TITLE="Docker Registry UI" \
+  -e DELETE_IMAGES="true" \
+  -e SHOW_CONTENT_DIGEST="true" \
+  -e NGINX_PROXY_PASS_URL="http://10.88.8.1:5000" \
+  -e SHOW_CATALOG_NB_TAGS="true" \
+  -e CATALOG_MIN_BRANCHES="1" \
+  -e CATALOG_MAX_BRANCHES="1" \
+  -e TAGLIST_PAGE_SIZE="100" \
+  -e REGISTRY_SECURED="false" \
+  -e CATALOG_ELEMENTS_LIMIT="1000" \
+  joxit/docker-registry-ui:main
+```
+
 ## splayer (替换为可以下载widows客户端)
 
 [项目地址](https://github.com/imsyy/SPlayer)
@@ -942,4 +968,348 @@ docker run -d \
   --restart unless-stopped \
   -p 8284:8080 \
   plantuml/plantuml-server
+```
+
+## docker-compose.yml
+
+```shell
+version: '3.8'
+
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    restart: always
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "3000:3000/tcp"
+    volumes:
+      - /opt/adguardhome/conf:/opt/adguardhome/conf
+      - /opt/adguardhome/work:/opt/adguardhome/work
+	  
+  qinglong:
+    image: whyour/qinglong
+    container_name: qinglong
+    restart: unless-stopped
+    ports:
+      - "5700:5700"
+    volumes:
+      - /opt/qinglong/data:/ql/data
+
+  syncthing:
+    image: syncthing/syncthing
+    container_name: syncthing
+    restart: always
+    ports:
+      - "8384:8384"       # Web UI
+      - "22000:22000/tcp" # TCP 同步端口
+      - "22000:22000/udp" # UDP 同步端口
+      - "21027:21027/udp" # 发现端口
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /opt/syncthing/config:/var/syncthing/config
+      - /opt/syncthing/files:/var/syncthing/files
+      - /opt/Pictures/Camera:/var/syncthing/Camera
+      - /opt/Pictures/Screenshots:/var/syncthing/Screenshots
+      - /opt/Pictures/Weixin:/var/syncthing/Weixin
+      - /opt/Pictures/Collage:/var/syncthing/Collage
+      - /opt/Pictures/Douyin:/var/syncthing/Douyin
+
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    restart: unless-stopped
+    ports:
+      - "8123:8123"
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /opt/homeassistant:/config
+
+  xunlei:
+    container_name: xunlei
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - "2345:2345"
+    volumes:
+      - /opt/xunlei:/xunlei/data
+      - /opt/Downloads:/xunlei/downloads
+    image: cnk3x/xunlei
+
+  nascab:
+    container_name: nascab
+    restart: always
+    ports:
+      - "8888:80"
+      - "5555:90"
+    volumes:
+      - /data/Books:/root/Books
+      - /data/Documents:/root/Documents
+      - /data/Downloads:/root/Downloads
+      - /data/Movies:/root/Movies
+      - /data/Music:/root/Music
+      - /data/Pictures:/root/Pictures
+      - /data/Videos:/root/Videos
+      - /data/privateSpace:/root/privateSpace
+      - /opt/nascab:/root/.local/share/nascab
+    logging:
+      driver: json-file
+      options:
+        max-size: 128m
+        max-file: 3
+    image: nascab:3.5.4
+
+  samba:
+    container_name: samba
+    restart: always
+    ports:
+      - "139:139"
+      - "445:445"
+    volumes:
+      - /opt/samba/samba.sh:/usr/bin/samba.sh
+      - /data/Books:/data/Books
+      - /data/Documents:/data/Documents
+      - /data/Downloads:/data/Downloads
+      - /data/Movies:/data/Movies
+      - /data/Music:/data/Music
+      - /data/Pictures:/data/Pictures
+      - /data/Videos:/data/Videos
+    command: >
+      -p
+      -u "lijianhang;lijianhang"
+      -s "home;/data/;yes;no;no;lijianhang;lijianhang;lijianhang"
+      -w "WORKGROUP"
+      -g "force user=lijianhang"
+      -g "guest account=lijianhang"
+    image: dperson/samba
+
+  aipan:
+    container_name: aipan
+    restart: always
+    ports:
+      - "3123:3000"
+    image: fooololo/aipan-netdisk-search
+
+  baidunetdisk:
+    container_name: baidunetdisk
+    restart: unless-stopped
+    ports:
+      - "5800:5800"
+    volumes:
+      - /opt/baidunetdisk:/config
+      - /data/Downloads:/config/baidunetdiskdownload
+    image: johngong/baidunetdisk:latest
+
+  bitwarden:
+    container_name: bitwarden
+    restart: on-failure
+    ports:
+      - "127:80"
+      - "3012:3012"
+    volumes:
+      - /opt/bitwarden:/data
+    environment:
+      - WEBSOCKET_ENABLED=true
+      - SIGNUPS_ALLOWED=true
+    image: vaultwarden/server
+
+  newsnow:
+    container_name: newsnow
+    restart: always
+    ports:
+      - "4444:4444"
+    environment:
+      - G_CLIENT_ID=
+      - G_CLIENT_SECRET=
+      - JWT_SECRET=
+      - INIT_TABLE=true
+      - ENABLE_CACHE=true
+    image: ghcr.nju.edu.cn/ourongxing/newsnow
+
+  win11:
+    container_name: win11
+    image: dockurr/windows
+    ports:
+      - "8006:8006"
+      - "3389:3389/tcp"
+      - "3389:3389/udp"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    stop_grace_period: 2m
+    environment:
+      - LANGUAGE=Chinese
+      - REGION=zh-CN
+      - KEYBOARD=zh-CN
+      - CPU_CORES=4
+      - RAM_SIZE=8G
+      - DISK_SIZE=64G
+      - USERNAME=Administrator
+      - PASSWORD=
+      - VERSION=11
+    volumes:
+      - /opt/win11:/storage
+      - /data:/data
+
+  easynvr:
+    container_name: easynvr
+    image: registry.cn-shanghai.aliyuncs.com/rustc/easynvr_amd64
+    restart: always
+    network_mode: host
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+    volumes:
+      - /opt/easynvr/configs:/app/configs
+      - /opt/easynvr/logs:/app/logs
+      - /opt/easynvr/temporary:/app/temporary
+      - /opt/easynvr/r:/app/r
+      - /opt/easynvr/stream:/app/stream
+
+  watchtower:
+    container_name: watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --cleanup --interval 3600 aipan qinglong adguardhome baidunetdisk bitwarden
+    image: containrrr/watchtower
+
+  mysql:
+    image: mysql:8.4.3
+    container_name: mysql
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - /opt/mysql/data:/var/lib/mysql
+      - /opt/mysql/conf:/etc/mysql/conf.d
+      - /opt/mysql/init:/docker-entrypoint-initdb.d
+    # ports:
+    #   - "3306:3306"  # 原命令未包含此选项，这里添加以确保服务可外部访问
+    command: --default-authentication-plugin=mysql_native_password  # 可选：指定认证插件
+
+  redis:
+    image: redis:7.4
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - /opt/redis/conf/redis.conf:/etc/redis/redis.conf
+      - /opt/redis/data:/data
+    command: redis-server /etc/redis/redis.conf --appendonly yes
+
+  postgres:
+    image: postgres:15.8
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - /opt/data/postgres/data:/var/lib/postgresql/data
+    # ports:
+    #   - "5432:5432"  # 原命令未包含此选项，这里添加以确保服务可外部访问
+
+  gitea:
+    image: gitea/gitea
+    container_name: gitea
+    privileged: true
+    restart: always
+    ports:
+      - "4000:3000"
+      - "4022:22"
+    environment:
+      USER_UID: 1000
+      USER_GID: 1000
+      GITEA__database__DB_TYPE: mysql
+      GITEA__database__HOST: mysql:3306
+      GITEA__database__NAME: gitea
+      GITEA__database__USER: gitea
+      GITEA__database__PASSWD: gitea
+    volumes:
+      - /opt/gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - mysql
+
+  registry:
+    container_name: registry
+    image: registry
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - /opt/registry:/var/lib/registry
+
+  registry-ui:
+    container_name: registry-ui
+    image: joxit/docker-registry-ui:main
+    restart: unless-stopped
+    ports:
+      - "8280:80"
+    environment:
+      - SINGLE_REGISTRY=true
+      - REGISTRY_TITLE=Docker Registry UI
+      - DELETE_IMAGES=true
+      - SHOW_CONTENT_DIGEST=true
+      - NGINX_PROXY_PASS_URL=http://10.88.8.1:5000
+      - SHOW_CATALOG_NB_TAGS=true
+      - CATALOG_MIN_BRANCHES=1
+      - CATALOG_MAX_BRANCHES=1
+      - TAGLIST_PAGE_SIZE=100
+      - REGISTRY_SECURED=false
+      - CATALOG_ELEMENTS_LIMIT=1000
+    depends_on:
+      - registry
+
+  vscode:
+    container_name: vscode
+    restart: unless-stopped
+    ports:
+      - "9005:8080"
+    environment:
+      - PASSWORD=123456
+    volumes:
+      - /opt/vscode:/home/coder
+    image: codercom/code-server:opensuse
+
+  moneynote:
+    container_name: moneynote
+    restart: always
+    ports:
+      - "43742:9092"
+      - "43743:81"
+      - "43744:82"
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=moneynote
+      - DB_USER=moneynote
+      - DB_PASSWORD=moneynote
+      - invite_code=moneynote
+    depends_on:
+      - mysql
+    image: moneynote/moneynote-all-no-mysql
+	
+  nginx:
+    image: nginx:1.25.3
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - /opt/nginx/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /opt/nginx/nginx/conf.d:/etc/nginx/conf.d
+      - /opt/nginx/logs:/var/log/nginx
+      - /opt/nginx/html:/usr/share/nginx/html
+      - /opt/nginx/admin-top:/usr/share/nginx/admin-top
+
 ```
