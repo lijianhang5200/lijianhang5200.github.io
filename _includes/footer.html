@@ -1,0 +1,42 @@
+<footer
+  aria-label="Site Info"
+  class="
+    d-flex flex-column justify-content-center text-muted
+    flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3
+  "
+>
+  <p>©
+    <time>2018-2024</time>
+    <em class="fst-normal">LiJianHang</em>.
+    <span
+    	data-bs-toggle="tooltip"
+    	data-bs-placement="top"
+    	title="除非另有说明，本网站上的博客文章均由作者按照知识共享署名 4.0 国际 (CC BY 4.0) 许可协议进行授权。"
+    >保留部分权利。</span>
+  </p>
+  <!-- 网站备案信息 -->
+  <p><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">蒙ICP备17002435号-1</a></p>
+</footer>
+<!-- 百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?f93c6f768897ee77a779e238c2122e9d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- 给所有文章内的链接自动加上 target="_blank" -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector("#main-wrapper > div > div.row.flex-grow-1 > main")
+          .querySelectorAll('.content a:not(.text-muted)').forEach(function(link) {
+    // 只处理站外链接（可选），不想区分就删掉 if 判断
+    if (!link.href.includes(window.location.hostname)) {
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+    }
+  });
+});
+</script>
